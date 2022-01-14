@@ -6,37 +6,64 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>promises</title>
 	</head>
-	<body></body>
+	<body>
+		<input id="input" type="text" />
+		<button>CLICK ME</button>
+        <p></p>
+	</body>
 </html>
 
 <script>
-	var ans = "avd";
-	//console.log(typeof ans);
-	var obj = {
-		success: true,
-		message: "success",
-	};
+	document.querySelector("button").addEventListener("click", promiseFunc);
+	function promiseFunc() {
+		//console.log(typeof ans);
+        var ans = document.querySelector("#input").value;
+        //console.log(ans);
+        var regx = /^[0-9]+$/;
+        // if(regx.test(ans)) {
+        //     console.log(ans);
+        // }
+		var obj = {
+			success: true,
+			message: "success",
+		};
 
-	var obj2 = {
-		success: false,
-		message: "invalid argument, promise accepts only valid numbers",
-	};
-	var myPromise = new Promise(function (resolve, reject) {
-		setTimeout(function () {
-			if (typeof ans == "number") {
-				resolve(obj);
-			} else {
-				reject(obj2);
-			}
-		},3000);
-	});
-
-	myPromise
-		.then(function (res) {
-			console.log(res);
-		})
-
-		.catch(function (err) {
-			console.log(err);
+		var obj2 = {
+			success: false,
+			message: "invalid argument, promise accepts only valid numbers",
+		};
+		var myPromise = new Promise(function (resolve, reject) {
+			setTimeout(function () {
+				if (regx.test(ans)) {
+                    //console.log(1)
+					resolve(obj);
+				} else {
+                    //console.log(2)
+					reject(obj2);
+				}
+			});
 		});
+
+        var div = document.createElement("div");
+        var div2 = document.createElement("div");
+        var p = document.querySelector("p");
+		myPromise
+			.then(function (res) {
+				console.log(res);
+
+
+                div.innerHTML = `success: ${res.success}`
+                div2.innerHTML = `message: ${res.message}`
+
+                p.append(div,div2)
+			})
+
+			.catch(function (err) {
+				console.log(err);
+                div.innerHTML = `success: ${err.success}`
+                div2.innerHTML = `message: ${err.message}`
+
+                p.append(div,div2)
+			});
+	}
 </script>
