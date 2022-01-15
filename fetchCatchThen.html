@@ -5,28 +5,26 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>fetch</title>
-        <style>
+		<style>
+			#container {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				text-align: center;
+				grid-gap: 20px;
+			}
 
-            #container {
-                display: grid;
-                grid-template-columns: repeat(4,1fr);
-                text-align: center;
-                grid-gap: 20px;
-            }
-
-            img {
-                height: 200px;
-                width: 180px;
-                margin-bottom: 20px;
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-            }
-        </style>
+			img {
+				height: 200px;
+				width: 180px;
+				margin-bottom: 20px;
+				box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+					rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+			}
+		</style>
 	</head>
 	<body>
-        <div id="container">
-            
-        </div>
-    </body>
+		<div id="container"></div>
+	</body>
 </html>
 
 <script>
@@ -40,7 +38,7 @@
 		})
 		.then(function (res) {
 			//console.log(res.data);
-            var datas = res.data
+			var datas = res.data;
 			display(datas);
 		})
 		.catch(function (err) {
@@ -49,19 +47,22 @@
 
 	function display(datas) {
 		//console.log(datas)
-        datas.forEach(function (elem) {
-            console.log(elem)
-            var div = document.createElement("div")
-            var email = document.createElement("p")
-            email.innerHTML = elem.email;
-            var first_name = document.createElement("h1")
-            first_name.innerHTML = elem.first_name;
-            var avatar = document.createElement("img")
-            avatar.src = elem.avatar;
-            div.append(first_name,email,avatar);
+		datas.forEach(function (elem, index) {
+			if (index < 5) {
+				console.log(elem);
+				console.log(index);
+				var div = document.createElement("div");
+				var email = document.createElement("p");
+				email.innerHTML = elem.email;
+				var first_name = document.createElement("h1");
+				first_name.innerHTML = elem.first_name;
+				var avatar = document.createElement("img");
+				avatar.src = elem.avatar;
+				div.append(first_name, email, avatar);
 
-            var main = document.querySelector("#container");
-            main.append(div)
-        })
+				var main = document.querySelector("#container");
+				main.append(div);
+			}
+		});
 	}
 </script>
